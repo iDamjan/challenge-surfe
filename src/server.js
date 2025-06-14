@@ -4,15 +4,13 @@ import userRoutes from "./routes/userRoutes.js";
 
 const fastify = Fastify({ logger: true });
 
-// Register CORS
 await fastify.register(cors, {
-  origin: true, // Allow all origins in development
+  origin: true,
 });
 
-// Register routes
-await fastify.register(userRoutes, { prefix: "/" });
+//
+await fastify.register(userRoutes, { prefix: "/users" });
 
-// Run the server!
 const start = async () => {
   try {
     await fastify.listen({ port: 3000, host: "0.0.0.0" });
