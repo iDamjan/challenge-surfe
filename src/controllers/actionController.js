@@ -1,4 +1,5 @@
 import { getUserActionCount } from "../services/actionService.js";
+import { getNextActionsProbability } from "../utils/actions.js";
 
 export async function handleGetUserActionCount(request, reply) {
   try {

@@ -6,6 +6,7 @@ const actionTypeEnum = z.enum([
   "VIEW_CONTACTS",
   "CONNECT_CRM",
   "WELCOME",
+  "REFER_USER",
 ]);
 
 export const actionSchema = z.object({

@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import userRoutes from "./routes/userRoutes.js";
+import actionRoutes from "./routes/actionRoutes.js";
 
 const fastify = Fastify({ logger: true });
 
@@ -10,6 +11,7 @@ await fastify.register(cors, {
 
 //
 await fastify.register(userRoutes, { prefix: "/users" });
+await fastify.register(actionRoutes, { prefix: "/actions" });
 
 const start = async () => {
   try {
