@@ -16,7 +16,7 @@ export async function calculateNextActionProbability(currentAction) {
 
   const nextActions = findNextActions(userSequences, currentAction);
 
-  const probabilities = calculateProbabilities(nextActions);
+  const probabilities = calculateProbabilities(nextActions, currentAction);
 
   return probabilities;
 }
@@ -54,7 +54,7 @@ function findNextActions(userSequences, currentAction) {
   return nextActions;
 }
 
-function calculateProbabilities(nextActions) {
+function calculateProbabilities(nextActions, currentAction) {
   if (nextActions.length === 0) {
     return {};
   }
@@ -64,7 +64,15 @@ function calculateProbabilities(nextActions) {
     actionCounts[action] = (actionCounts[action] || 0) + 1;
   });
 
-  const total = nextActions.length;
+  // Remove the current action from the results if it exists
+  delete actionCounts[currentAction];
+
+  const total = nextActions.filter((action) => action !== currentAction).length;
+
+  if (total === 0) {
+    return {};
+  }
+
   const probabilities = {};
 
   for (const [action, count] of Object.entries(actionCounts)) {
