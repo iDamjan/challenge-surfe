@@ -13,28 +13,7 @@ export async function getUserById(userId) {
   return validatedUser;
 }
 
-export async function getAllUsers() {
-  const users = await userRepository.findAll();
-  const validatedUsers = userListSchema.parse(users);
-  return validatedUsers;
-}
-
-export async function createUser(userData) {
-  return await userRepository.create(userData);
-}
-
-export async function updateUser(userId, userData) {
-  const updatedUser = await userRepository.update(userId, userData);
-  if (!updatedUser) {
-    throw new Error("User not found");
-  }
-  return updatedUser;
-}
-
-export async function deleteUser(userId) {
-  const result = await userRepository.delete(userId);
-  if (!result) {
-    throw new Error("User not found");
-  }
-  return true;
+export async function getTotalReferredUsers() {
+  const totalReferredUsers = await userRepository.findAll();
+  return totalReferredUsers;
 }

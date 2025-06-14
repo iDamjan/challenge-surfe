@@ -5,12 +5,21 @@ import { fileURLToPath } from "url";
 class BaseRepository {
   constructor(filePath) {
     this.filePath = path.join(process.cwd(), filePath);
+    this.data = null;
+    this.isInitialized = false;
+  }
+
+  async initData() {
+    if (this.isInitialized) return;
+    const data = await fs.readFile(this.filePath, "utf8");
+    this.data = data;
+    this.isInitialized = true;
   }
 
   async readData() {
     try {
-      const data = await fs.readFile(this.filePath, "utf8");
-      return JSON.parse(data);
+      if (!this.isInitialized) await this.initData();
+      return JSON.parse(this.data);
     } catch (error) {
       throw new Error(`Error reading data: ${error.message}`);
     }

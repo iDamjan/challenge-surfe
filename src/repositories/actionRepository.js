@@ -9,6 +9,8 @@ class ActionRepository extends BaseRepository {
     const data = await this.readData();
     return data.filter((action) => action.userId === parseInt(userId)).length;
   }
+
+  async filterUserActions(key) {}
 }
 
 export default new ActionRepository();

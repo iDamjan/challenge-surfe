@@ -5,7 +5,7 @@ export async function getUserActionCount(userId) {
     const count = await actionRepository.getAllUserActions(userId);
     return { count };
   } catch (error) {
-    return { error: "Error counting user actions" };
+    throw error;
   }
 }
 
