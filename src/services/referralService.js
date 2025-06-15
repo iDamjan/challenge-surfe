@@ -40,6 +40,11 @@ function buildReferralGraph(referralActions) {
     const referrer = action.userId;
     const referred = action.targetUser;
 
+    // Prevent self-referrals counts
+    if (referrer === referred) {
+      continue;
+    }
+
     if (!graph.has(referrer)) {
       graph.set(referrer, new Set());
     }
