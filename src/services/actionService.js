@@ -21,6 +21,7 @@ export async function calculateNextActionProbability(currentAction) {
   return probabilities;
 }
 
+// -------------- LOCAL FUNCTIONS --------------
 function groupActionsByUser(actions) {
   const userActions = {};
 

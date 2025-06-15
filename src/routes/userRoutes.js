@@ -1,11 +1,11 @@
 import {
   handleGetUserById,
-  handleGetReferredUsersIndex,
+  handleGetTotalReferredUsers,
 } from "../controllers/userController.js";
 
 async function userRoutes(fastify, options) {
   fastify.get("/:id", handleGetUserById);
-  fastify.get("/referred-users", handleGetTotalReferredUsers);
+  fastify.get("/referrals", handleGetTotalReferredUsers);
 }
 
 export default userRoutes;

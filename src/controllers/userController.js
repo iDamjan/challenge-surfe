@@ -1,5 +1,5 @@
-import { getUserById, getTotalReferredUsers } from "../services/userService.js";
-
+import { getUserById } from "../services/userService.js";
+import { calculateReferralIndex } from "../services/referralService.js";
 export async function handleGetUserById(request, reply) {
   try {
     const { id } = request.params;
@@ -18,7 +18,7 @@ export async function handleGetUserById(request, reply) {
 
 export async function handleGetTotalReferredUsers(request, reply) {
   try {
-    const referredUsers = await getTotalReferredUsers();
+    const referredUsers = await calculateReferralIndex();
     return reply.code(200).send(referredUsers);
   } catch (error) {
     return reply.code(500).send({ error: "Internal server error" });

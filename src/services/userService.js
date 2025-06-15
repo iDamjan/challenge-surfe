@@ -12,8 +12,3 @@ export async function getUserById(userId) {
 
   return validatedUser;
 }
-
-export async function getTotalReferredUsers() {
-  const totalReferredUsers = await userRepository.findAll();
-  return totalReferredUsers;
-}
