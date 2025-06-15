@@ -9,7 +9,6 @@ await fastify.register(cors, {
   origin: true,
 });
 
-//
 await fastify.register(userRoutes, { prefix: "/users" });
 await fastify.register(actionRoutes, { prefix: "/actions" });
 

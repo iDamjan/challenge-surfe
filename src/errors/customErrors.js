@@ -36,30 +36,6 @@ export const ResponseHelpers = {
     });
   },
 
-  // Success Response
-  success: (reply, data, statusCode = 200) => {
-    return reply.code(statusCode).send(data);
-  },
-
-  // Created Response
-  created: (reply, data) => {
-    return reply.code(201).send(data);
-  },
-
-  // No Content Response
-  noContent: (reply) => {
-    return reply.code(204).send();
-  },
-
-  // Bad Request Response
-  badRequest: (reply, message, details = null) => {
-    return reply.code(400).send({
-      error: message,
-      type: "BadRequest",
-      ...(details && { details }),
-    });
-  },
-
   // Unauthorized Response
   unauthorized: (reply, message = "Unauthorized") => {
     return reply.code(401).send({

@@ -1,6 +1,8 @@
 import { getUserById } from "../services/userService.js";
 import { calculateReferralIndex } from "../services/referralService.js";
 import { ResponseHelpers } from "../errors/customErrors.js";
+import { userSchema, referralIndexSchema } from "../schemas/user.schema.js";
+import responseHandler from "../utils/responseHandler.js";
 
 export async function handleGetUserById(request, reply) {
   try {
@@ -18,11 +20,13 @@ export async function handleGetUserById(request, reply) {
 
     const user = await getUserById(userId);
 
-    if (!user) {
+    const validatedUser = userSchema.parse(user);
+
+    if (!validatedUser) {
       return ResponseHelpers.notFound(reply, "User", userId);
     }
 
-    return ResponseHelpers.success(reply, user);
+    return responseHandler(reply, validatedUser);
   } catch (error) {
     return ResponseHelpers.handleError(reply, error, "handleGetUserById");
   }
@@ -30,8 +34,9 @@ export async function handleGetUserById(request, reply) {
 
 export async function handleGetTotalReferredUsers(request, reply) {
   try {
-    const referredUsers = await calculateReferralIndex();
-    return ResponseHelpers.success(reply, referredUsers);
+    const referralIndex = await calculateReferralIndex();
+
+    return responseHandler(reply, referralIndex);
   } catch (error) {
     return ResponseHelpers.handleError(
       reply,

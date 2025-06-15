@@ -2,6 +2,7 @@ import { getUserActionCount } from "../services/actionService.js";
 import { calculateNextActionProbability } from "../services/actionService.js";
 import { actionCountSchema, actionTypeEnum } from "../schemas/action.schema.js";
 import { ResponseHelpers } from "../errors/customErrors.js";
+import responseHandler from "../utils/responseHandler.js";
 
 export async function handleGetUserActionCount(request, reply) {
   try {
@@ -17,10 +18,10 @@ export async function handleGetUserActionCount(request, reply) {
       );
     }
 
-    const result = await getUserActionCount(userId);
-    const validatedResult = actionCountSchema.parse(result);
+    const count = await getUserActionCount(userId);
+    const validatedCount = actionCountSchema.parse(count);
 
-    return ResponseHelpers.success(reply, validatedResult);
+    return responseHandler(reply, validatedCount);
   } catch (error) {
     return ResponseHelpers.handleError(
       reply,
@@ -44,7 +45,7 @@ export async function handleGetNextActionProbability(request, reply) {
 
     const probabilities = await calculateNextActionProbability(actionType);
 
-    return ResponseHelpers.success(reply, probabilities);
+    return responseHandler(reply, probabilities);
   } catch (error) {
     return ResponseHelpers.handleError(
       reply,
