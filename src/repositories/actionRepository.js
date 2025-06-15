@@ -7,6 +7,11 @@ class ActionRepository extends BaseRepository {
 
   async getAllUserActions(userId) {
     const data = await this.readData();
+
+    // Check if data is empty
+    if (!data || !data.length) {
+      return 0;
+    }
     return data.filter((action) => action.userId === parseInt(userId)).length;
   }
 

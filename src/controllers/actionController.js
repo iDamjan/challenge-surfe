@@ -1,30 +1,32 @@
 import { getUserActionCount } from "../services/actionService.js";
 import { calculateNextActionProbability } from "../services/actionService.js";
 import { actionCountSchema, actionTypeEnum } from "../schemas/action.schema.js";
+import { ResponseHelpers } from "../errors/customErrors.js";
 
 export async function handleGetUserActionCount(request, reply) {
   try {
     const { id } = request.params;
+    const userId = parseInt(id);
 
-    // If user id is not valid return error
-    if (isNaN(id) || id < 0) {
-      return reply.code(400).send({ error: "User ID is required" });
+    // Validate user ID
+    if (isNaN(userId) || userId < 0) {
+      return ResponseHelpers.validationError(
+        reply,
+        "User ID must be a positive number",
+        "id"
+      );
     }
 
-    const result = await getUserActionCount(id);
-
+    const result = await getUserActionCount(userId);
     const validatedResult = actionCountSchema.parse(result);
 
-    if (!validatedResult) {
-      return reply.code(400).send({ error: "Invalid result" });
-    }
-
-    return reply.code(200).send(validatedResult);
+    return ResponseHelpers.success(reply, validatedResult);
   } catch (error) {
-    if (error.statusCode === 404) {
-      return reply.code(404).send({ error: "User not found" });
-    }
-    return reply.code(500).send({ error: "Internal server error" });
+    return ResponseHelpers.handleError(
+      reply,
+      error,
+      "handleGetUserActionCount"
+    );
   }
 }
 
@@ -35,17 +37,19 @@ export async function handleGetNextActionProbability(request, reply) {
     const parsedActionType = actionTypeEnum.safeParse(actionType);
 
     if (!parsedActionType.success) {
-      return reply.code(400).send({
-        error: "Invalid action type",
+      return ResponseHelpers.badRequest(reply, "Invalid action type", {
         validActions: actionTypeEnum.options,
       });
     }
 
     const probabilities = await calculateNextActionProbability(actionType);
 
-    return reply.code(200).send(probabilities);
+    return ResponseHelpers.success(reply, probabilities);
   } catch (error) {
-    console.error("Error calculating action probabilities:", error);
-    return reply.code(500).send({ error: "Internal server error" });
+    return ResponseHelpers.handleError(
+      reply,
+      error,
+      "handleGetNextActionProbability"
+    );
   }
 }
