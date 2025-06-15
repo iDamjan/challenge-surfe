@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const actionTypeEnum = z.enum([
+export const actionTypeEnum = z.enum([
   "EDIT_CONTACT",
   "ADD_CONTACT",
   "VIEW_CONTACTS",
@@ -16,4 +16,6 @@ export const actionSchema = z.object({
   createdAt: z.string(),
 });
 
-export const actionListSchema = z.array(actionSchema);
+export const actionCountSchema = z.object({
+  count: z.number().min(0),
+});

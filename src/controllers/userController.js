@@ -3,7 +3,11 @@ import { calculateReferralIndex } from "../services/referralService.js";
 export async function handleGetUserById(request, reply) {
   try {
     const { id } = request.params;
-    console.log(id);
+
+    if (isNaN(id) || id < 0) {
+      return reply.code(400).send({ error: "User ID is required" });
+    }
+
     const user = await getUserById(id);
 
     if (!user) {
@@ -16,7 +20,7 @@ export async function handleGetUserById(request, reply) {
   }
 }
 
-export async function handleGetTotalReferredUsers(request, reply) {
+export async function handleGetTotalReferredUsers(_request, reply) {
   try {
     const referredUsers = await calculateReferralIndex();
     return reply.code(200).send(referredUsers);

@@ -1,14 +1,6 @@
 import { getUserActionCount } from "../services/actionService.js";
 import { calculateNextActionProbability } from "../services/actionService.js";
-
-const VALID_ACTION_TYPES = [
-  "WELCOME",
-  "CONNECT_CRM",
-  "EDIT_CONTACT",
-  "ADD_CONTACT",
-  "VIEW_CONTACTS",
-  "REFER_USER",
-];
+import { actionCountSchema, actionTypeEnum } from "../schemas/action.schema.js";
 
 export async function handleGetUserActionCount(request, reply) {
   try {
@@ -20,7 +12,14 @@ export async function handleGetUserActionCount(request, reply) {
     }
 
     const result = await getUserActionCount(id);
-    return reply.code(200).send(result);
+
+    const validatedResult = actionCountSchema.parse(result);
+
+    if (!validatedResult) {
+      return reply.code(400).send({ error: "Invalid result" });
+    }
+
+    return reply.code(200).send(validatedResult);
   } catch (error) {
     if (error.statusCode === 404) {
       return reply.code(404).send({ error: "User not found" });
@@ -33,10 +32,12 @@ export async function handleGetNextActionProbability(request, reply) {
   try {
     const { actionType } = request.params;
 
-    if (!VALID_ACTION_TYPES.includes(actionType)) {
+    const parsedActionType = actionTypeEnum.safeParse(actionType);
+
+    if (!parsedActionType.success) {
       return reply.code(400).send({
         error: "Invalid action type",
-        validActions: VALID_ACTION_TYPES,
+        validActions: actionTypeEnum.options,
       });
     }
 
