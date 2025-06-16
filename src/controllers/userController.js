@@ -1,7 +1,7 @@
 import { getUserById } from "../services/userService.js";
 import { calculateReferralIndex } from "../services/referralService.js";
 import { ResponseHelpers } from "../errors/customErrors.js";
-import { userSchema, referralIndexSchema } from "../schemas/user.schema.js";
+import { userSchema } from "../schemas/user.schema.js";
 import responseHandler from "../utils/responseHandler.js";
 
 /**
