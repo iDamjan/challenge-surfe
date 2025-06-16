@@ -4,6 +4,11 @@ import { actionCountSchema, actionTypeEnum } from "../schemas/action.schema.js";
 import { ResponseHelpers } from "../errors/customErrors.js";
 import responseHandler from "../utils/responseHandler.js";
 
+/**
+ *
+ * @param {import("fastify").FastifyRequest} request
+ * @param {import("fastify").FastifyReply} reply
+ */
 export async function handleGetUserActionCount(request, reply) {
   try {
     const { id } = request.params;
@@ -31,6 +36,11 @@ export async function handleGetUserActionCount(request, reply) {
   }
 }
 
+/**
+ *
+ * @param {import("fastify").FastifyRequest} request
+ * @param {import("fastify").FastifyReply} reply
+ */
 export async function handleGetNextActionProbability(request, reply) {
   try {
     const { actionType } = request.params;

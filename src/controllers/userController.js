@@ -4,6 +4,11 @@ import { ResponseHelpers } from "../errors/customErrors.js";
 import { userSchema, referralIndexSchema } from "../schemas/user.schema.js";
 import responseHandler from "../utils/responseHandler.js";
 
+/**
+ *
+ * @param {import("fastify").FastifyRequest} request
+ * @param {import("fastify").FastifyReply} reply
+ */
 export async function handleGetUserById(request, reply) {
   try {
     const { id } = request.params;
@@ -32,6 +37,11 @@ export async function handleGetUserById(request, reply) {
   }
 }
 
+/**
+ *
+ * @param {import("fastify").FastifyRequest} request
+ * @param {import("fastify").FastifyReply} reply
+ */
 export async function handleGetTotalReferredUsers(request, reply) {
   try {
     const referralIndex = await calculateReferralIndex();

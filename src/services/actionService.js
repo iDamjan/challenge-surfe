@@ -1,5 +1,10 @@
 import actionRepository from "../repositories/actionRepository.js";
 
+/**
+ *
+ * @param {number} userId
+ * @returns {Promise<{ count: number }>}
+ */
 export async function getUserActionCount(userId) {
   try {
     const count = await actionRepository.getAllUserActions(userId);
@@ -10,19 +15,28 @@ export async function getUserActionCount(userId) {
   }
 }
 
+/**
+ *
+ * @param {string} currentAction
+ * @returns {Promise<{ [key: string]: number }>}
+ */
 export async function calculateNextActionProbability(currentAction) {
   const allActions = await actionRepository.findAll();
 
   const userSequences = groupActionsByUser(allActions);
-
   const nextActions = findNextActions(userSequences, currentAction);
-
   const probabilities = calculateProbabilities(nextActions, currentAction);
 
   return probabilities;
 }
 
 // -------------- LOCAL FUNCTIONS --------------
+
+/**
+ *
+ * @param {Action[]} actions
+ * @returns {Record<number, Action[]>}
+ */
 function groupActionsByUser(actions) {
   const userActions = {};
 
@@ -42,6 +56,12 @@ function groupActionsByUser(actions) {
   return Object.values(userActions);
 }
 
+/**
+ *
+ * @param {Action[][]} userSequences
+ * @param {string} currentAction
+ * @returns {string[]}
+ */
 function findNextActions(userSequences, currentAction) {
   const nextActions = [];
 
@@ -56,6 +76,12 @@ function findNextActions(userSequences, currentAction) {
   return nextActions;
 }
 
+/**
+ *
+ * @param {string[]} nextActions
+ * @param {string} currentAction
+ * @returns {Record<string, number>}
+ */
 function calculateProbabilities(nextActions, currentAction) {
   if (nextActions.length === 0) {
     return {};
@@ -68,7 +94,6 @@ function calculateProbabilities(nextActions, currentAction) {
 
   // Remove the current action from the results if it exists
   delete actionCounts[currentAction];
-
   const total = nextActions.filter((action) => action !== currentAction).length;
 
   if (total === 0) {

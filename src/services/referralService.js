@@ -1,6 +1,10 @@
 import actionRepository from "../repositories/actionRepository.js";
 import userRepository from "../repositories/userRepository.js";
 
+/**
+ *
+ * @returns {Promise<{ [key: string]: number }>}
+ */
 export async function calculateReferralIndex() {
   try {
     const users = await userRepository.findAll();
@@ -25,6 +29,11 @@ export async function calculateReferralIndex() {
 }
 
 // -------------- LOCAL FUNCTIONS --------------
+
+/**
+ *
+ * @returns {Promise<Action[]>}
+ */
 async function getReferralActions() {
   const referralActions = actionRepository.filterUserActions({
     key: "type",
@@ -33,6 +42,11 @@ async function getReferralActions() {
   return referralActions;
 }
 
+/**
+ *
+ * @param {Action[]} referralActions
+ * @returns {Map<number, Set<number>>}
+ */
 function buildReferralGraph(referralActions) {
   const graph = new Map();
 
@@ -55,6 +69,13 @@ function buildReferralGraph(referralActions) {
   return graph;
 }
 
+/**
+ *
+ * @param {number} userId
+ * @param {Map<number, Set<number>>} graph
+ * @param {Set<number>} visited
+ * @returns {number}
+ */
 function calculateUserReferralCount(userId, graph, visited) {
   if (visited.has(userId)) {
     return 0;
