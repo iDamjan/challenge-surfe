@@ -8,4 +8,4 @@ export const userSchema = z.object({
 
 export const userListSchema = z.array(userSchema);
 
-// Create other user schemas here for creating, deleting and updating a user
+// Note: we can create other user schemas here for creating, deleting and updating a user

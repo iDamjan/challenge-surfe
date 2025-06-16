@@ -1,7 +1,7 @@
 import actionRepository from "../repositories/actionRepository.js";
 
 /**
- *
+ * @description Get the action count for a user
  * @param {number} userId
  * @returns {Promise<{ count: number }>}
  */
@@ -16,7 +16,7 @@ export async function getUserActionCount(userId) {
 }
 
 /**
- *
+ * @description Calculate the next action probability
  * @param {string} currentAction
  * @returns {Promise<{ [key: string]: number }>}
  */
@@ -33,7 +33,7 @@ export async function calculateNextActionProbability(currentAction) {
 // -------------- LOCAL FUNCTIONS --------------
 
 /**
- *
+ * @description Group actions by user
  * @param {Action[]} actions
  * @returns {Record<number, Action[]>}
  */
@@ -57,7 +57,7 @@ function groupActionsByUser(actions) {
 }
 
 /**
- *
+ * @description Find the next actions
  * @param {Action[][]} userSequences
  * @param {string} currentAction
  * @returns {string[]}
@@ -77,7 +77,7 @@ function findNextActions(userSequences, currentAction) {
 }
 
 /**
- *
+ * @description Calculate the probabilities of the next actions
  * @param {string[]} nextActions
  * @param {string} currentAction
  * @returns {Record<string, number>}

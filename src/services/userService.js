@@ -1,7 +1,7 @@
 import userRepository from "../repositories/userRepository.js";
 
 /**
- *
+ * @description Get the user by id
  * @param {number} userId
  * @returns {Promise<User>}
  */

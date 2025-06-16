@@ -2,7 +2,7 @@ import actionRepository from "../repositories/actionRepository.js";
 import userRepository from "../repositories/userRepository.js";
 
 /**
- *
+ * @description Calculate the referral index
  * @returns {Promise<{ [key: string]: number }>}
  */
 export async function calculateReferralIndex() {
@@ -31,7 +31,7 @@ export async function calculateReferralIndex() {
 // -------------- LOCAL FUNCTIONS --------------
 
 /**
- *
+ * @description Get the referral actions
  * @returns {Promise<Action[]>}
  */
 async function getReferralActions() {
@@ -43,7 +43,7 @@ async function getReferralActions() {
 }
 
 /**
- *
+ * @description Build the referral graph
  * @param {Action[]} referralActions
  * @returns {Map<number, Set<number>>}
  */
@@ -70,7 +70,7 @@ function buildReferralGraph(referralActions) {
 }
 
 /**
- *
+ * @description Calculate the user referral count
  * @param {number} userId
  * @param {Map<number, Set<number>>} graph
  * @param {Set<number>} visited

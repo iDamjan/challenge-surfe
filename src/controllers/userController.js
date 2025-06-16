@@ -5,7 +5,7 @@ import { userSchema } from "../schemas/user.schema.js";
 import responseHandler from "../utils/responseHandler.js";
 
 /**
- *
+ * @description Get the user by id
  * @param {import("fastify").FastifyRequest} request
  * @param {import("fastify").FastifyReply} reply
  */
@@ -38,7 +38,7 @@ export async function handleGetUserById(request, reply) {
 }
 
 /**
- *
+ * @description Get the total referred users
  * @param {import("fastify").FastifyRequest} request
  * @param {import("fastify").FastifyReply} reply
  */

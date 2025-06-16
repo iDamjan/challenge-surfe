@@ -10,15 +10,15 @@ const mockUserRepository = {
 };
 
 // Mock the modules before importing the service
-jest.unstable_mockModule("../../repositories/actionRepository.js", () => ({
+jest.unstable_mockModule("../../../repositories/actionRepository.js", () => ({
   default: mockActionRepository,
 }));
 
-jest.unstable_mockModule("../../repositories/userRepository.js", () => ({
+jest.unstable_mockModule("../../../repositories/userRepository.js", () => ({
   default: mockUserRepository,
 }));
 
-const { calculateReferralIndex } = await import("../referralService.js");
+const { calculateReferralIndex } = await import("../../referralService.js");
 
 describe("ReferralService", () => {
   beforeEach(() => {

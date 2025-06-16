@@ -14,18 +14,6 @@ npm install
 npm start / npm run dev
 ```
 
-## Run tests
-
-```bash
-npm test
-```
-
-## Run tests with coverage
-
-```bash
-npm test:coverage
-```
-
 ## API Testing
 
 ### Api routes example to call
@@ -36,4 +24,26 @@ curl -X GET http://localhost:3000/users/referral
 curl -X GET http://localhost:3000/actions/:id/count
 ```
 
-### Api routes example to call
+## Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run with coverage
+npm run test:coverage
+
+# Run in watch mode
+npm run test:watch
+
+### Testing method
+
+- Arrange
+- Act
+- Assert
+
+### Testing types
+
+- Unit testing
+- Integration testing
+```

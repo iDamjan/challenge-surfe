@@ -5,7 +5,7 @@ import { ResponseHelpers } from "../errors/customErrors.js";
 import responseHandler from "../utils/responseHandler.js";
 
 /**
- *
+ * @description Get the action count for a user
  * @param {import("fastify").FastifyRequest} request
  * @param {import("fastify").FastifyReply} reply
  */
